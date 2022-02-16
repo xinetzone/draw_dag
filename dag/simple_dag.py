@@ -76,14 +76,12 @@ class DAG(DAGMeta):
     def pairs(self):
         sizes = self.layer_sizes.copy()
         edgelist = []
-        n_layer = 0
-        for size in sizes[1:]:
+        for n_layer, size in enumerate(sizes[1:]):
             x, y = np.meshgrid(np.arange(sizes[0]), np.arange(sizes[1]))
             paris = np.stack([x.flatten(), y.flatten()], axis=1)
             edgelist.extend(
                 [f"$x^{n_layer}_{i}$", f"$x^{n_layer+1}_{j}$"] for i, j in paris)
             del sizes[0]
-            n_layer += 1
         return edgelist
 
     def plot(self):
